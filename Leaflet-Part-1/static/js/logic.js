@@ -41,7 +41,7 @@ layer.bindPopup("<h3>" + feature.properties.place +
 d3.json(queryUrl).then(function(data) {
 
     // Create a GeoJSON layer containing the features array on the earthquakeData object
-    // Run the onEachFeature function once for each piece of data in the array
+    // Run the popUpMsg function once for each piece of data in the array
     L.geoJSON(data, {
         pointToLayer: function (feature, latlng) {
             if (feature.geometry.coordinates[2] >= 90) {
