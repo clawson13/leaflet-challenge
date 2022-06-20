@@ -17,7 +17,7 @@ HTML, JavaScript, Leaflet, GeoJSON.
 
 ![Landing Preview](images/landing.png)
 
-## Source
+## Sources
 
 * USGS GeoJSON API: https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
 * Plate Tectonic GeoJSON data provided by Hugo Ahlenius, with Nordpil and Peter Bird as data source: https://github.com/fraxen/tectonicplates
