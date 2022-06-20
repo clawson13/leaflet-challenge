@@ -1,3 +1,4 @@
+// Initialize the necessary LayerGroups
 let layers = {
   quakes: new L.LayerGroup(),
   plates: new L.LayerGroup()
@@ -13,15 +14,15 @@ d3.json(queryUrl).then(function(data) {
 
 function createFeatures(earthquakeData) {
 
-  // Give each earthquake a popup describing the place, time, and magnitude of the earthquake
+  // Give each earthquake a popup describing the place, time, magnitude, and depth of the earthquake
   function popUpMsg(feature, layer) {
     layer.bindPopup("<h3>" + feature.properties.place +
         "</h3><hr><p> <b>Date/Time: </b>" + new Date(feature.properties.time) + "</p>" +
         "<p> <b>Magnitude:</b> " + feature.properties.mag + "; <b>Depth:</b> " + feature.geometry.coordinates[2] + "</p>");
     }
 
-    // Create a GeoJSON layer containing the features array on the earthquakeData object
-    // Run the popUpMsg function once for each piece of data in the array
+  // Create a GeoJSON layer containing the features array on the earthquakeData object
+  // Run the popUpMsg function once for each piece of data in the array
   let earthquakes = L.geoJSON(earthquakeData, {
           pointToLayer: function (feature, latlng) {
               if (feature.geometry.coordinates[2] >= 90) {
@@ -88,8 +89,8 @@ function createFeatures(earthquakeData) {
           onEachFeature: popUpMsg
       });
   
+  // Add to the Earthquakes layer
   earthquakes.addTo(layers.quakes);
-  
 };
 
 // Set data source for techtonic data
@@ -97,28 +98,24 @@ const tectUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/
 
 // Perform a GET request to the query URL/
 d3.json(tectUrl).then(function (data) {
-  // Once we get a response, send the data.features object to the createTects function.
+  // Once we get a response, send the data.features object to the createTects function
   createTects(data.features);
 });
 
 function createTects(tectData) {
 
-  // Create a GeoJSON layer that contains the features array on the tectData object.
+  // Create a GeoJSON layer that contains the features array on the tectData object
+  // Assign color and set fill opacity to 0
   var tectplates = L.geoJSON(tectData, {
-    // onEachFeature: onEachFeature
-  });
+    onEachFeature: function (feature, layer) {
+      layer.bindTooltip(feature.geometry).setStyle({color :'#FFA500', fillOpacity: 0})
+  }});
 
-  // Send our tectonic plate layer to the createMap function/
+  // Add to the Tectonic Plates layer
   tectplates.addTo(layers.plates);
 }
 
-// function createMap(earthquakes, tectplates) {
-
-  // Create two separate layer groups: one for the city markers and another for the state markers.
-  // var tects = L.layerGroup(tectplates);
-  // var quakes = L.layerGroup(earthquakes)
-
-    // Create the base layers
+// Create the base layers
 let satelliteMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
     maxZoom: 18
@@ -136,30 +133,29 @@ let topoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
 });
 
-// Define a baseMaps object to hold our base layer(s)
+// Define a baseMaps object to hold our base layers
 let baseMaps = {
     "Satellite" : satelliteMap,
     "Grayscale": grayMap,
     "Topographic" : topoMap
     };
 
-
-// // Create an overlay object to hold our overlay.
+// Create an overlay object to hold our overlay
 let overlayMaps = {
   "Tectonic Plates": layers.plates,
   "Earthquakes": layers.quakes
 };
 
-// // Create our map, giving it the satellite and earthquakes layers to display on load
+// Create our map, giving it the satellite base and earthquake/plates layers to display on load
 let myMap = L.map("map", {
     center: [ 37.09, -95.71 ],
     zoom: 5,
-    layers: [satelliteMap, layers.plates, layers.quakes]
+    layers: [satelliteMap, layers.plates]
 });
 
-// // Create a layer control.
-// // Pass it our baseMaps and overlayMaps.
-// // Add the layer control to the map.
+// Create a layer control
+// Pass it our baseMaps and overlayMaps
+// Add the layer control to the map
 L.control.layers(baseMaps, overlayMaps, {
   collapsed: false
 }).addTo(myMap);
@@ -190,6 +186,6 @@ legend.onAdd = function (myMap) {
       };
 
 legend.addTo(myMap);
-  // }
+
 
 
