@@ -1,13 +1,13 @@
 # Earthquake Visualization
 
-Homework for Boot Camp Week 15: Leaflet and GeoJSON; Submitted by Corey Lawson-Enos
+Prepared by Corey Lawson-Enos
 
 ## Summary
 * Web visualization that calls earthquake activity data for the past seven days, mapping epicenters with depth and magnitude indicators.
 * Includes tectonic plate layer for immediate reference to proximity.
 
 ## Technologies
-HTML, JavaScript, Leaflet, GeoJSON.
+HTML, JavaScript, CSS, Leaflet, GeoJSON.
 
 ## Web Application Address
 
