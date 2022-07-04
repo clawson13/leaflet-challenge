@@ -21,3 +21,7 @@ HTML, JavaScript, CSS, Leaflet, GeoJSON.
 
 * USGS GeoJSON API: https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
 * Plate Tectonic GeoJSON data provided by Hugo Ahlenius, with Nordpil and Peter Bird as data source: https://github.com/fraxen/tectonicplates
+
+## Contact
+E-mail: clawson131@gmail.com<br>
+LinkedIn: https://www.linkedin.com/in/corey-lawson-enos/
